@@ -202,3 +202,93 @@ font-size: 1.5em;
 font-weight: bold;
 color: #00ff00;
 }
+/* Media query for mobile screens */
+@media (max-width: 768px) {
+  .game-container {
+    width: 90%; /* Reduce the width of the quiz box */
+    max-width: 20em; /* Further limit the max width */
+    padding: 2em 1em; /* Reduce padding for more space */
+  }
+
+  .pokemon-image {
+    width: 200px; /* Reduce Pokémon image size */
+    height: 200px;
+  }
+
+  input {
+    font-size: 1em; /* Adjust input font size */
+    padding: 0.6em;
+  }
+
+  button {
+    font-size: 1em; /* Adjust button font size */
+    padding: 0.6em;
+  }
+
+  #timer {
+    font-size: 1.2em; /* Adjust timer size */
+  }
+
+  #score {
+    font-size: 1.2em; /* Adjust score size */
+  }
+
+  .lives img {
+    width: 30px; /* Make the lives (Pokéballs) smaller */
+    height: 30px;
+  }
+}
+
+.end-game {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 2em;
+  background-color: #ffffff;
+  border: 0.6em solid #090029;
+  border-radius: 0.5em;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  width: 90%; /* Make it responsive */
+  max-width: 400px; /* Limit the maximum width */
+  margin: auto;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.end-game h2 {
+  font-size: 2em;
+  color: #da2e2c;
+  margin-bottom: 1em;
+}
+
+.end-game p {
+  font-size: 1.2em;
+  margin: 0.5em 0;
+}
+
+.end-game button {
+  background-color: #ffffff;
+  padding: 0.8em 2em;
+  border: 0.3em solid #090029;
+  border-radius: 0.5em;
+  box-shadow: 0 0.5em 0 0 #090029;
+  cursor: pointer;
+  font-size: 1.2em;
+  font-weight: bold;
+  color: #090029;
+  margin-top: 1em;
+}
+
+.end-game button:hover {
+  background-color: #ffcccc;
+  box-shadow: none;
+  transform: translateY(0.6em);
+}
+
+.end-game button:focus {
+  outline: none;
+}

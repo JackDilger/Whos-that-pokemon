@@ -4,41 +4,54 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Who's that Pokémon?</title>
+    <!-- Google Fonts -->
     <link
       href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap"
       rel="stylesheet"
     />
+    <!-- Stylesheet -->
     <link rel="stylesheet" href="assets/css/style.css">
   </head>
   <body>
+    <!-- Start Screen -->
     <div class="start-container">
       <button class="start-button" id="startGame">Start</button>
     </div>
 
-    <div class="game-container">
+    <!-- Main Game Container -->
+    <div class="game-container" style="display: none;">
       <div class="header">
+        <!-- Lives Display -->
         <div class="lives">
           <span>HP</span>
           <div id="lives"></div>
         </div>
+        <!-- Timer Display -->
         <div class="timer-container">
           <span>Timer</span>
           <div id="timer">15</div>
         </div>
       </div>
+      <!-- Loading Spinner -->
       <div id="loadingSpinner" class="hide"></div>
+      <!-- Pokémon Image -->
       <img
         id="pokemonImage"
         class="pokemon-image"
         src=""
         alt="Who's that Pokémon?"
       />
+      <!-- Guess Input -->
       <input type="text" id="guess" placeholder="Enter Pokémon name" />
+      <!-- Game Buttons -->
       <button id="submitGuess">Submit Guess</button>
       <button id="skipButton">Skip</button>
+      <!-- Result Display -->
       <p id="result"></p>
+      <!-- Score Display -->
       <p>Score: <span id="score">0</span></p>
     </div>
+    <!-- Script -->
     <script src="assets/js/script.js"></script>
   </body>
 </html>
