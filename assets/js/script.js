@@ -2,15 +2,16 @@ const startButton = document.getElementById("startGame");
 const startContainer = document.querySelector(".start-container");
 const gameContainer = document.querySelector(".game-container");
 const livesElement = document.getElementById("lives");
+const endGameContainer = document.querySelector(".end-game-container");
 
-const imageElement = document.getElementById("pokemonImage");
-const loadingSpinner = document.getElementById("loadingSpinner");
-const guessInput = document.getElementById("guess");
-const submitButton = document.getElementById("submitGuess");
-const skipButton = document.getElementById("skipButton");
-const resultElement = document.getElementById("result");
-const scoreElement = document.getElementById("score");
-const timerElement = document.getElementById("timer");
+let imageElement;
+let loadingSpinner;
+let guessInput;
+let submitButton;
+let skipButton;
+let resultElement;
+let scoreElement;
+let timerElement;
 
 let pokemonName = "";
 let score = 0;
@@ -25,7 +26,8 @@ function initializeLives() {
   livesElement.innerHTML = "";
   for (let i = 0; i < 5; i++) {
     const life = document.createElement("img");
-    life.src = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/poke-ball.png";
+    life.src =
+      "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/poke-ball.png";
     life.alt = "Pokéball";
     livesElement.appendChild(life);
   }
@@ -47,14 +49,12 @@ function loseLife() {
 // End the game when lives run out
 function endGame() {
   highestStreak = Math.max(highestStreak, streak); // Update highest streak
-  gameContainer.innerHTML = `
-    <div class="end-game">
-      <h2>Game Over</h2>
-      <p>Your Score: ${score}</p>
-      <p>Highest Streak: ${highestStreak}</p>
-      <button id="playAgain">Play Again</button>
-    </div>
-  `;
+  gameContainer.classList.add("hide");
+  endGameContainer.classList.remove("hide");
+
+  // Display final score and highest streak
+  document.getElementById("finalScore").textContent = score;
+  document.getElementById("finalStreak").textContent = highestStreak;
 
   const playAgainButton = document.getElementById("playAgain");
   playAgainButton.addEventListener("click", resetGame);
@@ -66,49 +66,44 @@ function resetGame() {
   streak = 0;
   lives = 5;
   timer = 15;
-  scoreElement.textContent = score;
+  highestStreak = 0;
+
+  // Reset UI state
+  gameContainer.classList.remove("hide");
+  endGameContainer.classList.add("hide");
+
+  // Reset variables and initialize UI
   initializeLives();
+  initializeDynamicElements();
+  showLoadingAndFetchNewPokemon();
+}
 
-  gameContainer.innerHTML = `
-    <div class="header">
-      <div class="lives">
-        <span>HP</span>
-        <div id="lives"></div>
-      </div>
-      <div class="timer-container">
-        <span>Timer</span>
-        <div id="timer">15</div>
-      </div>
-    </div>
-    <div id="loadingSpinner" class="hide"></div>
-    <img id="pokemonImage" class="pokemon-image" src="" alt="Who's that Pokémon?" />
-    <input type="text" id="guess" placeholder="Enter Pokémon name" />
-    <button id="submitGuess">Submit Guess</button>
-    <button id="skipButton">Skip</button>
-    <p id="result"></p>
-    <p>Score: <span id="score">0</span></p>
-  `;
+// Reinitialize dynamic elements and event listeners
+function initializeDynamicElements() {
+  imageElement = document.getElementById("pokemonImage");
+  loadingSpinner = document.getElementById("loadingSpinner");
+  guessInput = document.getElementById("guess");
+  submitButton = document.getElementById("submitGuess");
+  skipButton = document.getElementById("skipButton");
+  resultElement = document.getElementById("result");
+  scoreElement = document.getElementById("score");
+  timerElement = document.getElementById("timer");
 
-  const newSubmitButton = document.getElementById("submitGuess");
-  const newSkipButton = document.getElementById("skipButton");
-  const newGuessInput = document.getElementById("guess");
+  submitButton.addEventListener("click", submitGuessHandler);
+  skipButton.addEventListener("click", skipPokemon);
 
-  newSubmitButton.addEventListener("click", submitGuessHandler);
-  newSkipButton.addEventListener("click", skipPokemon);
-
-  newGuessInput.addEventListener("keydown", (event) => {
+  guessInput.addEventListener("keydown", (event) => {
     if (event.key === "Enter") {
       submitGuessHandler();
     }
   });
-
-  showLoadingAndFetchNewPokemon();
 }
 
 startButton.addEventListener("click", () => {
   startContainer.style.display = "none";
   gameContainer.style.display = "block";
   initializeLives();
+  initializeDynamicElements();
   showLoadingAndFetchNewPokemon();
 });
 
@@ -166,9 +161,6 @@ function startTimer() {
 function revealPokemon() {
   imageElement.style.filter = "none";
 }
-
-submitButton.addEventListener("click", submitGuessHandler);
-skipButton.addEventListener("click", skipPokemon);
 
 function submitGuessHandler() {
   resultElement.textContent = "";
